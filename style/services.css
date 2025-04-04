@@ -1,0 +1,97 @@
+/* @import url("../style/style.css"); */
+main{
+    gap: 25px;
+}
+#divTitle{
+    background-image: url("../pictures/services_brightness.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 223.16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+#divServicesPrice{
+    display: flex;
+    flex-direction: column;
+    margin: 0 25px;
+    gap: 25px;
+}
+.divServicesPrice{
+    background-color: #505C65;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 275px;
+    
+}
+.divServicesPrice h2{
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+.servicesPrice{
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+.servicesPrice :nth-child(2){
+    font-weight: bold;
+}
+#forfaitsBarber{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: space-between;
+}
+.separate{
+    background-color: white;
+    height: 2px;
+    margin: 25px 0 25px 0;
+}
+
+
+
+
+
+
+/* .meetingButton{
+    width: 205px;
+    height: 50px;
+    background-color: #544C41;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.meetingImg{
+    background-image: url("../pictures/meeting773.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 460px;
+    width: 100%;
+    height: 100%;
+    
+    min-height: 223.16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+@media (min-width: 992px){
+    #divServicesPrice{
+        flex-direction: row;
+    }
+}

@@ -1,0 +1,53 @@
+footer{
+    background-color: #9D8E7D;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    text-align: center;
+}
+#openingDaysHours{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+}
+.openingDaysHours{
+    display: flex;
+    justify-content: space-between;
+}
+
+#googleMap{
+    margin: 0px -25px;
+}
+footer a{
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+}
+footer a:hover{
+    text-decoration: underline;
+}
+
+@media (min-width: 576px){
+    #openingDaysHours{
+        margin: 0 45px;
+    }
+    
+}
+
+@media (min-width: 768px){
+    #openingDaysHours{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .openingDaysHours{
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 1400px){
+    #openingDaysHours{
+        margin: 0 150px;
+    }
+}
