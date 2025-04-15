@@ -89,13 +89,11 @@ class ModelAppointment{
             return $error->getMessage();
         }
     }
-    public function recoverMadeAppointment():array | string{
+    public function recoverMadeAppointment($date):array | string{
 
         try{
 
-            $date=$this->getDate();
-
-            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, `hour`, `date`, benefit, hairdresser FROM booked_appointments WHERE `date`=?");
+            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `date`, benefit, hairdresser FROM booked_appointments WHERE `date`=?");
 
             $req->bindParam(1,$date,PDO::PARAM_STR);
     

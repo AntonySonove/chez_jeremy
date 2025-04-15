@@ -4,7 +4,7 @@ class ViewAppointment{
     private ?string $messageMakeAnAppointment;
     private ?string $messageCancelAppointment;
     private ?string $availableAppointment;
-    private ?string $bookedAppointment = null;
+    private ?string $bookedAppointment;
 
     public function getMessage(): ?string { return $this->message; }
     public function setMessage(?string $message): self { $this->message = $message; return $this; }
@@ -183,14 +183,14 @@ class ViewAppointment{
 
 <input id="inputDisplayAppointment" type="date" name="inputDisplayAppointment">
 <p>Liste des rendez-vous</p>
-<ul>
-'.$this->getBookedAppointment().'
+<ul id="displayBookedAppointments">
 </ul>
 
-    <script src="../src/script/appointment.js"></script>
+<script src="../src/script/appointment.js"></script>
 </body>
 </html>   
-        ';
-    }
+';
 }
+}
+// '.$this->getBookedAppointment().'
 ?>

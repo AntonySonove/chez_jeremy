@@ -2,7 +2,7 @@ const dateInput = document.getElementById("dateInput");
 const selectHour = document.getElementById("selectHour");
 const dateInputAddAppointmentOneDay= document.getElementById("dateInputAddAppointmentOneDay");
 const inputDisplayAppointment= document.getElementById("inputDisplayAppointment");
-
+const displayBookedAppointments=document.getElementById("displayBookedAppointments");
 // Création de la date du jour au format YYYY-MM-DD
 const today = new Date().toISOString().split("T")[0];
 
@@ -28,6 +28,23 @@ dateInput.addEventListener("change", async function() {
 
 });
 
+//! AFFICHER LES RENDEZ-VOUS
+inputDisplayAppointment.addEventListener("change", async function() {
+  try{
+
+    const selectedDateAppointment = inputDisplayAppointment.value;
+    const response = await fetch(`controller_booked_appointment.php?date=${selectedDateAppointment}`);
+    const data = await response.text();
+  
+    displayBookedAppointments.innerHTML = data;
+    console.log(data);
+
+  }catch(error){
+    console.log("erreur lors du fetch : ", error);
+  }
+
+});
+
 //! Désactiver les dimanches et lundis
 dateInput.addEventListener("input", () => {
   const selectedDate = new Date(dateInput.value);
@@ -42,6 +59,7 @@ dateInput.addEventListener("input", () => {
 //! charger les créneaux directement a l'affichage de la page
 dateInput.dispatchEvent(new Event("change"));
 dateInputAddAppointmentOneDay.dispatchEvent(new Event("change"));
+inputDisplayAppointment.dispatchEvent(new Event("change"));
 
 //! bouton pour selectionner toutes les checkbox
 document.addEventListener("DOMContentLoaded", function () {

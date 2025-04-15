@@ -2,14 +2,16 @@
 include "../utils/utils.php";
 include "../model/model_appointment.php";
 include "../controller/controller_header.php";
+// include "../controller/controller_booked_appointment.php";
 include "../view/view_appointment.php";
 include "../view/view_footer.php";
 
 class ControllerAppointment{
     private ?ViewAppointment $viewAppointment;
     private ?ModelAppointment $modelAppointment;
+    // private ?ControllerBookedAppointment $ControllerBookedAppointment;
 
-    public function __construct(ViewAppointment $viewAppointment, ModelAppointment $modelAppointment){
+    public function __construct(ViewAppointment $viewAppointment, ModelAppointment $modelAppointment,){
         $this->viewAppointment=$viewAppointment;
         $this->modelAppointment=$modelAppointment;
     }
@@ -20,6 +22,8 @@ class ControllerAppointment{
     public function getModelAppointment(): ?ModelAppointment { return $this->modelAppointment; }
     public function setModelAppointment(?ModelAppointment $modelAppointment): self { $this->modelAppointment = $modelAppointment; return $this; }
 
+    // public function getControllerBookedAppointment(): ?ControllerBookedAppointment { return $this->ControllerBookedAppointment; }
+    // public function setControllerBookedAppointment(?ControllerBookedAppointment $ControllerBookedAppointment): self { $this->ControllerBookedAppointment = $ControllerBookedAppointment; return $this; }
     
     //! AFFICHER LES CRENEAUX DISPONIBLES
     public function displayAppointment():string{
@@ -49,6 +53,31 @@ class ControllerAppointment{
         }
         return "";
     }
+
+    //! AFFICHER LES RENDEZ-VOUS
+    public function displayBookedAppointment():string{
+
+        //* récupération de la date
+        $date=$_GET["date"]?? null;
+
+        if($date){
+
+            //* variable d'affichage
+            $bookedAppointment="";
+            
+            foreach($this->modelAppointment->recoverMadeAppointment($date) as $element){
+    
+                $bookedAppointment=$bookedAppointment.'
+                    <li>'.$element.'</li>
+                ';
+            }
+            echo $bookedAppointment;
+            exit;
+        }else{
+            return "Aucun rendez-vous prévu";
+        }
+    }
+    
 
     //! AJOUTER UN CRENEAU
     public function addAppointmentOneDay():string{
@@ -99,8 +128,7 @@ class ControllerAppointment{
             //* Ajout des créneaux
             $this->getModelAppointment()->setHour($oneCleanedCheckboxAddOneDayAppointment)->setDate($date);
             $this->getModelAppointment()->addAnAppointment();
-        }
-        
+        }       
 
         return "<span style='color:green'>*Créneau(x) créé(s)</span>";
     }
@@ -141,8 +169,7 @@ class ControllerAppointment{
                 $this->getModelAppointment()->cancelAddAnAppointment();
             }
             return "<span style='color:green'>*Créneau(x) supprimé(s)</span>";
-        }
-        
+        }       
 
     //! PRENDRE UN RENDEZ-VOUS
     public function makeAnAppointment():string{
@@ -151,7 +178,6 @@ class ControllerAppointment{
         if(!isset($_POST["submitMakeAnAppointment"])){
 
             return "";
-
         }
         
         //* Vérifier que les champs obligatoirs ne sont pas vides
@@ -185,29 +211,6 @@ class ControllerAppointment{
         return "";
     }
 
-    //! AFFICHER LES RENDEZ-VOUS
-    public function displayBookedAppointment():array | string{
-
-        //* récupération de la date
-        $date=$_GET["date"]?? null;
-        $this->modelAppointment->setDate($date);
-
-        //* variable d'affichage
-        $bookedAppointment="";
-
-        if($date){
-            foreach($this->modelAppointment->recoverMadeAppointment() as $element){
-
-                $bookedAppointment=$bookedAppointment.'
-                    <li>'.$element.'</li>
-                ';
-            }
-            return $bookedAppointment;
-        }else{
-            return "Aucun rendez-vous prévu";
-        }
-    }
-
     //! AFFICHAGE DE LA PAGE
     public function render(){
 
@@ -216,7 +219,8 @@ class ControllerAppointment{
         $message=$this->addAppointmentOneDay();
         $messageMakeAnAppointment=$this->makeAnAppointment();
         $messageCancelAppointment=$this->cancelAddAppointmentOneDay();
-        $bookedAppointment=$this->displayBookedAppointment();
+        // $bookedAppointment= new ControllerBookedAppointment;
+        // $bookedAppointment->displayBookedAppointments();
 
         //* faire le rendu
         echo $this->getViewAppointment()
@@ -224,15 +228,16 @@ class ControllerAppointment{
         ->setAvailableAppointment($availableAppointment)
         ->setMessageMakeAnAppointment($messageMakeAnAppointment)
         ->setMessageCancelAppointment($messageCancelAppointment)
-        ->setBookedAppointment($bookedAppointment)
         ->displayView();
+        
+        // ->setBookedAppointment($bookedAppointment)
+        
     }
-
 }
 date_default_timezone_set("Europe/Paris");
 
-
-$appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment);
+$appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
+// $appointment->setControllerBookedAppointment(new ControllerBookedAppointment(new ViewAppointment, new ModelAppointment));
 $appointment->render();
 
 ?>
