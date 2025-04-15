@@ -18,7 +18,6 @@ class ControllerBookedAppointment {
         $date = $_GET["date"];
 
         $data=$this->modelAppointment->recoverMadeAppointment($date);
-        // var_dump($data);
 
         if($date){
             $bookedAppointment="";
@@ -38,7 +37,7 @@ class ControllerBookedAppointment {
             <strong>'.$element["formatted_hour"].' | '.$element["firstname"].' '.$element["lastname"].'</strong>
         </p>
         <p>
-            '.$element["email"].' | '.$element["phone"].'
+            '.$element["email"].' | '.formatPhoneNumber($element["phone"]).'
         </p>
         <p>
             <strong>'.$element["benefit"].' | '.$element["hairdresser"].'</strong>
@@ -54,7 +53,6 @@ class ControllerBookedAppointment {
     }
 }
 $bookedAppointment= new ControllerBookedAppointment(new ModelAppointment);
+
 echo $bookedAppointment->displayBookedAppointment();
-
-
 ?>

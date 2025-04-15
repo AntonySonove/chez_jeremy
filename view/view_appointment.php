@@ -51,25 +51,21 @@ class ViewAppointment{
         <p>Prestation</p>
         <p>
             <select name="benefit">
-                <option value="choice" selected>Cheveux</option>
-                <option value="haircutStyling">Coupe + Coiffage Homme</option>
-                <option value="americanLayered">Dégradé américain (à blanc)</option>
-                <option value="crewCut">Coupe en brosse</option>
-                <option value="childHaircut">Coupe enfant (-de 12 ans)</option>
+            <option value="choice" selected>Choix de la prestation</option>
+                <optgroup label="Cheveux">
+                    <option value="Coupe + Coiffage">Coupe + Coiffage Homme</option>
+                    <option value="Dégradé américain">Dégradé américain (à blanc)</option>
+                    <option value="Coupe en brosse">Coupe en brosse</option>
+                    <option value="Coupe enfant">Coupe enfant (-de 12 ans)</option>
+                </optgroup>
+                <optgroup label="Barbe">
+                    <option value="Taille de barbe">Taille de barbe (taillage et traçage au rasoir)</option>
+                </optgroup>
+                <optgroup label="Forfaits">
+                    <option value="Shampoing + Coupe + Coiffage">Shampoing + Coupe + Coiffage</option>
+                    <option value="Coupe + Coiffage + Taille de barbe">Coupe + Coiffage + Taille de barbe (finition rasoir)</option>
+                </optgroup>
             </select>
-            
-            <!-- <select name="benefit">
-                <option value="choice" selected>Barbe</option>
-                <option value="beardTrim">Taille de barbe (taillage et traçage au rasoir)</option>
-            </select>
-        </p>
-        <p>
-            <select name="benefit">
-                <option value="choice" selected>Forfaits</option>
-                <option value="shampooHaircutStyling">Shampoing + Coupe + Coiffage</option>
-                <option value="haircutStylingBeardTrim">Coupe + Coiffage + Taille de barbe (finition rasoir)</option>
-            </select> -->
-        </p>
         <p>
             <input id="dateInput" type="date" name="date">
             
@@ -81,9 +77,8 @@ class ViewAppointment{
         <p>
             <select name="hairdresser">
                 <option value="choice">Choix du coiffeur</option>
-                <option value="jeremy">JEREMY</option>
-                <option value="jeremy">COIFFEUR1</option>
-                <option value="jeremy">COIFFEUR2</option>
+                <option value="JEREMY">JEREMY</option>
+                <option value="REMY">REMY</option>
             </select>
         </p>
         <p>
@@ -190,7 +185,6 @@ class ViewAppointment{
 </body>
 </html>   
 ';
+    }
 }
-}
-// '.$this->getBookedAppointment().'
 ?>

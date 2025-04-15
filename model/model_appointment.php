@@ -11,7 +11,7 @@ class ModelAppointment{
     private ?string $town;
     private ?string $benefit;
     private ?string $hairdresser;
-    private ?int $phone;
+    private ?string $phone;
     private ?int $postalCode;
     private ?int $age;
     
@@ -57,8 +57,8 @@ class ModelAppointment{
     public function getHairdresser(): ?string { return $this->hairdresser; }
     public function setHairdresser(?string $hairdresser): self { $this->hairdresser = $hairdresser; return $this; }
 
-    public function getPhone(): ?int { return $this->phone; }
-    public function setPhone(?int $phone): self { $this->phone = $phone; return $this; }
+    public function getPhone(): ?string { return $this->phone; }
+    public function setPhone(?string $phone): self { $this->phone = $phone; return $this; }
 
     public function getPostalCode(): ?int { return $this->postalCode; }
     public function setPostalCode(?int $postalCode): self { $this->postalCode = $postalCode; return $this; }
@@ -93,7 +93,7 @@ class ModelAppointment{
 
         try{
 
-            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `date`, benefit, hairdresser FROM booked_appointments WHERE `date`=?");
+            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `date`, benefit, hairdresser FROM booked_appointments WHERE `date`=? ORDER BY HOUR ASC");
 
             $req->bindParam(1,$date,PDO::PARAM_STR);
     
@@ -112,8 +112,6 @@ class ModelAppointment{
 
             $hour=$this->getHour();
             $date=$this->getDate();
-
-            // var_dump($hour, $date);
 
             $req=$this->getBdd()->prepare("INSERT INTO appointments (`hour`,`date`) VALUES (?,?)");
             $req->bindParam(1,$hour,PDO::PARAM_STR);
@@ -153,7 +151,7 @@ class ModelAppointment{
             $req->bindParam(5,$postalCode,PDO::PARAM_INT);
             $req->bindParam(6,$town,PDO::PARAM_STR);
             $req->bindParam(7,$email,PDO::PARAM_STR);
-            $req->bindParam(8,$phone,PDO::PARAM_INT);
+            $req->bindParam(8,$phone,PDO::PARAM_STR);
             $req->bindParam(9,$hour,PDO::PARAM_STR);
             $req->bindParam(10,$date,PDO::PARAM_STR);
             $req->bindParam(11,$benefit,PDO::PARAM_STR);
@@ -187,7 +185,6 @@ class ModelAppointment{
         }catch(PDOException $error){
             return $error->getMessage();
         }
-
     }
 
     public function cancelAddAnAppointment():string{
@@ -209,8 +206,8 @@ class ModelAppointment{
         }catch(PDOException $error){
             return $error->getMessage();
         }
-    
     }
+
     public function cancelBookAnAppointment():string{
         try{
 
@@ -269,7 +266,6 @@ class ModelAppointment{
         }catch(PDOException $error){
             return $error->getMessage();
         }
-
     }
 }
 ?>

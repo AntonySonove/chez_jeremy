@@ -219,8 +219,6 @@ class ControllerAppointment{
         $message=$this->addAppointmentOneDay();
         $messageMakeAnAppointment=$this->makeAnAppointment();
         $messageCancelAppointment=$this->cancelAddAppointmentOneDay();
-        // $bookedAppointment= new ControllerBookedAppointment;
-        // $bookedAppointment->displayBookedAppointments();
 
         //* faire le rendu
         echo $this->getViewAppointment()
@@ -228,16 +226,13 @@ class ControllerAppointment{
         ->setAvailableAppointment($availableAppointment)
         ->setMessageMakeAnAppointment($messageMakeAnAppointment)
         ->setMessageCancelAppointment($messageCancelAppointment)
-        ->displayView();
-        
-        // ->setBookedAppointment($bookedAppointment)
-        
+        ->displayView();       
     }
 }
 date_default_timezone_set("Europe/Paris");
 
 $appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
-// $appointment->setControllerBookedAppointment(new ControllerBookedAppointment(new ViewAppointment, new ModelAppointment));
+
 $appointment->render();
 
 ?>
