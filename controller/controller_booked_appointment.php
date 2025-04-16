@@ -20,6 +20,7 @@ class ControllerBookedAppointment {
         $data=$this->modelAppointment->recoverMadeAppointment($date);
 
         if($date){
+
             $bookedAppointment="";
 
             if(empty($data)){
@@ -40,14 +41,13 @@ class ControllerBookedAppointment {
             '.$element["email"].' | '.formatPhoneNumber($element["phone"]).'
         </p>
         <p>
-            <strong>'.$element["benefit"].' | '.$element["hairdresser"].'</strong>
+            <strong>'.$element["benefit"].' | '.$element["name"].'</strong>
         </p>
     </div>
 </li>       
                 ';
     
-            }   
-            
+            }     
         }
         return $bookedAppointment;
     }

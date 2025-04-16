@@ -9,7 +9,6 @@ include "../view/view_footer.php";
 class ControllerAppointment{
     private ?ViewAppointment $viewAppointment;
     private ?ModelAppointment $modelAppointment;
-    // private ?ControllerBookedAppointment $ControllerBookedAppointment;
 
     public function __construct(ViewAppointment $viewAppointment, ModelAppointment $modelAppointment,){
         $this->viewAppointment=$viewAppointment;
@@ -22,9 +21,17 @@ class ControllerAppointment{
     public function getModelAppointment(): ?ModelAppointment { return $this->modelAppointment; }
     public function setModelAppointment(?ModelAppointment $modelAppointment): self { $this->modelAppointment = $modelAppointment; return $this; }
 
-    // public function getControllerBookedAppointment(): ?ControllerBookedAppointment { return $this->ControllerBookedAppointment; }
-    // public function setControllerBookedAppointment(?ControllerBookedAppointment $ControllerBookedAppointment): self { $this->ControllerBookedAppointment = $ControllerBookedAppointment; return $this; }
-    
+    //! INSERER LES COIFFEURS DANS LES SELECT
+    public function displayHairdresser():string{
+
+        $hairdresserList='';
+        foreach($this->modelAppointment->recoverHairdresser() as $element){
+            
+            $hairdresserList=$hairdresserList.'<option value='.$element["id_hairdresser"].'>'.$element["name"].'</option>';    
+        }
+        return $hairdresserList;
+    }
+
     //! AFFICHER LES CRENEAUX DISPONIBLES
     public function displayAppointment():string{
 
@@ -80,93 +87,123 @@ class ControllerAppointment{
     
 
     //! AJOUTER UN CRENEAU
-    public function addAppointmentOneDay():string{
+    public function addAppointment():string{
 
         //* Vérifier si on rçcoit le formulaire
-        if(!isset($_POST["submitAddAppointmentOneDay"])){
+        if(!isset($_POST["submitAddAppointment"])){
 
             return "";
         }
         
         //* Vérifier si la date est renseignée
-        if (empty($_POST["dateInputAddAppointmentOneDay"])){
+        if (empty($_POST["dateAddAppointment"])){
 
             return "<span style='color: red'>*Date non saisie</span>";
         }
+
+        //* Vérifier que le coiffeur est renseigné 
+        if (empty($_POST["hairdresser"])){
+
+            return "<span style='color: red'>*Coiffeur non renseigné</span>";
+        }
+
         //* Vérifier qu'au moins une checkbox est sélectionnée
-        if (!isset($_POST["checkboxAddOneDayAppointment"])){
+        if (!isset($_POST["checkboxAddAppointment"])){
 
             return "<span style='color: red'>*Selectionnez au moins un créneau</span>";
         }
 
         //* Nettoyage de la date
-        $date=sanitize($_POST["dateInputAddAppointmentOneDay"]);
+        $date=sanitize($_POST["dateAddAppointment"]);
+        
+        //* Nettoyage du coiffeur
+        $hairdresser=sanitize($_POST["hairdresser"]);
 
         //* Création d'un tableau pour récupérer toutes les checkbox pour boucler dessus
-        $cleanedCheckboxAddOneDayAppointment=[];
+        $cleanedCheckbox=[];
+
+        //* vériefier que les horraires sont autorisées
+        $horairesAutorises = [
+            "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+            "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+            "18:00", "18:30"
+        ];
+        
+        if (isset($_POST["checkboxAddAppointment"])) {
+
+            foreach ($_POST["checkboxAddAppointment"] as $element) {
+
+                if (!in_array($element, $horairesAutorises)) {
+
+                    return "erreur";
+                }
+            }
+        }
 
         //* Boucle pour nettoyer les données des checkbox
-        foreach($_POST["checkboxAddOneDayAppointment"] as $checkboxAddOneDayAppointment){
-            $cleanedCheckboxAddOneDayAppointment[]=sanitize($checkboxAddOneDayAppointment);
+        foreach($_POST["checkboxAddAppointment"] as $element){
+            $cleanedCheckbox[]=sanitize($element);
         }
 
         //* Récupération des créneaux existants dans la bdd (pour éviter les doublons)
-        $this->getModelAppointment()->setDate($date);
+        $this->getModelAppointment()->setDate($date)->setHairdresser($hairdresser);
         $data=$this->getModelAppointment()->getByHour();
 
         //* Vérifier si les créneaux existent
-        foreach($cleanedCheckboxAddOneDayAppointment as $oneCleanedCheckboxAddOneDayAppointment){
+        foreach($cleanedCheckbox as $element){
             
-            foreach($data as $oneData){
+            foreach($data as $elementData){
               
-                if($oneData["formatted_hour"]==$oneCleanedCheckboxAddOneDayAppointment){
+                if($elementData["formatted_hour"]==$element){
 
                     return "<span style='color: red'>*Créneau(x) déjà enregistré(s)</span>";
                 }
             }
                 
             //* Ajout des créneaux
-            $this->getModelAppointment()->setHour($oneCleanedCheckboxAddOneDayAppointment)->setDate($date);
-            $this->getModelAppointment()->addAnAppointment();
+            $this->getModelAppointment()->setHour($element)->setDate($date)->setHairdresser($hairdresser);
+            $this->getModelAppointment()->AddAppointment();
         }       
 
-        return "<span style='color:green'>*Créneau(x) créé(s)</span>";
+        return "<span style='color:green'>*Créneau(x) ajouté(s)</span>";
     }
 
     //! SUPPRIMER UN CRENEAU
-    public function cancelAddAppointmentOneDay(){
+    public function cancelAddAppointment(){
             //* Vérifier si on rçcoit le formulaire
-            if(!isset($_POST["cancelAddAppointmentOneDay"])){
+            if(!isset($_POST["cancelAddAppointment"])){
 
                 return "";
             }
 
             //* Vérifier si la date est renseignée
-            if (empty($_POST["dateInputAddAppointmentOneDay"])){
+            if (empty($_POST["dateAddAppointment"])){
     
                 return "<span style='color: red'>*Date non saisie</span>";
             }
             //* Vérifier qu'au moins une checkbox est sélectionnée
-            if (!isset($_POST["checkboxAddOneDayAppointment"])){
+            if (!isset($_POST["checkboxAddAppointment"])){
     
                 return "<span style='color: red'>*Selectionnez au moins un créneau</span>";
             }
     
-            //* Nettoyage de la date
-            $date=sanitize($_POST["dateInputAddAppointmentOneDay"]);
+            //* Nettoyage de la date et du coiffeur
+            $date=sanitize($_POST["dateAddAppointment"]);
+            $hairdresser=sanitize($_POST["hairdresser"]);
     
             //* Création d'un tableau pour récupérer toutes les checkbox pour boucler dessus
-            $cleanedCheckboxAddOneDayAppointment=[]; 
+            $cleanedCheckbox=[]; 
     
             //* Boucle pour nettoyer les données des checkbox
-            foreach($_POST["checkboxAddOneDayAppointment"] as $checkboxAddOneDayAppointment){
-                $cleanedCheckboxAddOneDayAppointment[]=sanitize($checkboxAddOneDayAppointment);
+            foreach($_POST["checkboxAddAppointment"] as $element){
+                $cleanedCheckbox[]=sanitize($element);
             }
     
             //* suppression des créneaux
-            foreach ($cleanedCheckboxAddOneDayAppointment as $hour) {
-                $this->getModelAppointment()->setHour($hour)->setDate($date);
-                $this->getModelAppointment()->cancelAddAnAppointment();
+            foreach ($cleanedCheckbox as $element) {
+                $this->getModelAppointment()->setHour($element)->setDate($date)->setHairdresser($hairdresser);
+                $this->getModelAppointment()->cancelAddAppointment();
             }
             return "<span style='color:green'>*Créneau(x) supprimé(s)</span>";
         }       
@@ -185,6 +222,9 @@ class ControllerAppointment{
 
             return "<span style='color: red'>*Veuillez saisir tous les champs obligatoirs</span>";
         }
+        if($_POST["benefit"]== "choice"){
+            return "<span style='color: red'>*Veuillez choisir une prestation</span>";
+        }
         //* Nettoyage des données
         $firstname=sanitize($_POST["firstname"]);
         $lastname=sanitize($_POST["lastname"]);
@@ -202,26 +242,36 @@ class ControllerAppointment{
         //* Vérifier que le créneau est disponible
         $this->getModelAppointment()->setHour($hour)->setDate($date);
         $data=$this->getModelAppointment()->getByBooked();
-        
-        if(!empty($data)){
+        var_dump($data);
+        if(!empty($data && $data[0]["id_hairdresser"]=="1")){
+
+            $hairdresser=1;
+            $this->getModelAppointment()->setFirstname($firstname)->setLastname($lastname)->setAge($age)->setStreet($street)->setPostalCode($postalCode)->setTown($town)->setEmail($email)->setPhone($phone)->setBenefit($benefit)->setHairdresser($hairdresser)->bookAnAppointment();
+
+            return $this->getModelAppointment()->makeAnAppointment();
+
+        }else{
+            $hairdresser=2;
             $this->getModelAppointment()->setFirstname($firstname)->setLastname($lastname)->setAge($age)->setStreet($street)->setPostalCode($postalCode)->setTown($town)->setEmail($email)->setPhone($phone)->setBenefit($benefit)->setHairdresser($hairdresser)->bookAnAppointment();
 
             return $this->getModelAppointment()->makeAnAppointment();
         }
-        return "";
+        // return "";
     }
 
     //! AFFICHAGE DE LA PAGE
     public function render(){
 
         //* charger l'affichage
+        $hairdresser=$this->displayHairdresser();
         $availableAppointment=$this->displayAppointment();
-        $message=$this->addAppointmentOneDay();
+        $message=$this->addAppointment();
         $messageMakeAnAppointment=$this->makeAnAppointment();
-        $messageCancelAppointment=$this->cancelAddAppointmentOneDay();
+        $messageCancelAppointment=$this->cancelAddAppointment();
 
         //* faire le rendu
         echo $this->getViewAppointment()
+        ->setHairdresser($hairdresser)
         ->setMessage($message)
         ->setAvailableAppointment($availableAppointment)
         ->setMessageMakeAnAppointment($messageMakeAnAppointment)
@@ -234,5 +284,4 @@ date_default_timezone_set("Europe/Paris");
 $appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
 
 $appointment->render();
-
 ?>

@@ -66,6 +66,23 @@ class ModelAppointment{
     public function getAge(): ?int { return $this->age; }
     public function setAge(?int $age): self { $this->age = $age; return $this; }
 
+    //! RECUPERER LES COIFFEURS
+    public function recoverHairdresser():array | string{
+
+        try{
+
+            $req=$this->getBdd()->prepare("SELECT `name`, id_hairdresser FROM hairdressers");
+            $req->execute();
+            $data=$req->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    //! RECUPERER LES CRENEAUX DISPONNIBLES
     public function recoverAvailableAppointments($date):array | string{
         try{
 
@@ -78,7 +95,7 @@ class ModelAppointment{
                 $timesQuery = "AND `hour` NOT IN ('18:00', '18:30')";
             } 
 
-            $req=$this->getBdd()->prepare("SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour,`date` FROM appointments WHERE `date`= :selectedDate $timesQuery AND is_booked = 0 ORDER BY HOUR ASC");
+            $req=$this->getBdd()->prepare("SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour,`date` FROM appointments WHERE `date`= :selectedDate $timesQuery AND is_booked = 0  GROUP BY `hour` ORDER BY HOUR ASC");
             $req->bindParam(":selectedDate", $date, PDO::PARAM_STR);
             $req->execute();
             $data=$req->fetchAll(PDO::FETCH_ASSOC);
@@ -89,11 +106,18 @@ class ModelAppointment{
             return $error->getMessage();
         }
     }
+
+    //! RECUPERER LES CRENEAUX RESERVES
     public function recoverMadeAppointment($date):array | string{
 
         try{
 
-            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `date`, benefit, hairdresser FROM booked_appointments WHERE `date`=? ORDER BY HOUR ASC");
+            $req=$this->getBdd()->prepare("SELECT firstname, lastname, age, street, postal_code, town, email, phone, TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `date`, benefit, `name` 
+            FROM booked_appointments AS ba
+            INNER JOIN hairdressers AS h
+            ON ba.id_hairdresser=h.id_hairdresser
+            WHERE `date`=? 
+            ORDER BY HOUR ASC");
 
             $req->bindParam(1,$date,PDO::PARAM_STR);
     
@@ -107,15 +131,18 @@ class ModelAppointment{
         }   
     }
 
-    public function addAnAppointment():string{
+    //! AJOUTER UN CRENEAU 
+    public function AddAppointment():string{
         try{
 
             $hour=$this->getHour();
             $date=$this->getDate();
+            $haidresser=$this->getHairdresser();
 
-            $req=$this->getBdd()->prepare("INSERT INTO appointments (`hour`,`date`) VALUES (?,?)");
+            $req=$this->getBdd()->prepare("INSERT INTO appointments (`hour`,`date`,id_hairdresser) VALUES (?,?,?)");
             $req->bindParam(1,$hour,PDO::PARAM_STR);
             $req->bindParam(2,$date,PDO::PARAM_STR);
+            $req->bindParam(3,$haidresser,PDO::PARAM_INT);
             $req->execute();
 
             return "";
@@ -125,11 +152,12 @@ class ModelAppointment{
         }
     }
 
+    //! PRENDRE UN RENDEZ-VOUS
     public function makeAnAppointment():string{
 
         try{
 
-            $req=$this->getBdd()->prepare("INSERT INTO booked_appointments (firstname, lastname, age, street, postal_code, town, email, phone, `hour`, `date`, benefit, hairdresser) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            $req=$this->getBdd()->prepare("INSERT INTO booked_appointments (firstname, lastname, age, street, postal_code, town, email, phone, `hour`, `date`, benefit, id_hairdresser) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
     
             $firstname=$this->getFirstname();
             $lastname=$this->getLastname();
@@ -155,7 +183,7 @@ class ModelAppointment{
             $req->bindParam(9,$hour,PDO::PARAM_STR);
             $req->bindParam(10,$date,PDO::PARAM_STR);
             $req->bindParam(11,$benefit,PDO::PARAM_STR);
-            $req->bindParam(12,$haidresser,PDO::PARAM_STR);
+            $req->bindParam(12,$haidresser,PDO::PARAM_INT);
     
             $req->execute();
     
@@ -166,17 +194,20 @@ class ModelAppointment{
         }   
     }
 
+    //! PASSER UN CRENEAU EN "RESERVE"
     public function bookAnAppointment():string{
 
         try{
 
-            $req=$this->getBdd()->prepare("UPDATE appointments SET is_booked=1 WHERE `hour`=? AND `date`=?");
+            $req=$this->getBdd()->prepare("UPDATE appointments SET is_booked=1 WHERE `hour`=? AND `date`=? AND id_hairdresser=?");
 
             $hour=$this->getHour();
             $date=$this->getDate();
+            $hairdresser=$this->getHairdresser();
 
             $req->bindParam(1,$hour,PDO::PARAM_STR);
             $req->bindParam(2,$date,PDO::PARAM_STR);
+            $req->bindParam(3,$hairdresser,PDO::PARAM_INT);
 
             $req->execute();
 
@@ -187,17 +218,21 @@ class ModelAppointment{
         }
     }
 
-    public function cancelAddAnAppointment():string{
+    //! SUPPRIMER UN CRENEAU
+    public function cancelAddAppointment():string{
 
         try{
 
-             $req=$this->getBdd()->prepare("DELETE FROM appointments WHERE `hour`=? AND `date`=?");
+             $req=$this->getBdd()->prepare("DELETE FROM appointments 
+             WHERE `hour`=? AND `date`=? AND id_hairdresser=?");
             
             $hour=$this->getHour();
             $date=$this->getDate();
+            $hairdresser=$this->getHairdresser();
 
             $req->bindParam(1,$hour,PDO::PARAM_STR);
             $req->bindParam(2,$date,PDO::PARAM_STR);
+            $req->bindParam(3,$hairdresser,PDO::PARAM_INT);
 
             $req->execute();            
 
@@ -208,6 +243,7 @@ class ModelAppointment{
         }
     }
 
+    //! PASSER UN CRENEAU EN "DISPONIBLE"
     public function cancelBookAnAppointment():string{
         try{
 
@@ -227,15 +263,20 @@ class ModelAppointment{
         }
     }
 
+    //! RECUPERER UN CRENEAU DISPONNIBLE PAR SON HEURE
     public function getByHour():array | string{
 
         try{
 
-            $req=$this->getBdd()->prepare("SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour FROM appointments WHERE `date`=? AND is_booked=0");
+            $req=$this->getBdd()->prepare("SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour 
+            FROM appointments 
+            WHERE `date`=? AND is_booked=0 AND id_hairdresser=?");
     
             $date=$this->getDate();
+            $hairdresser=$this->getHairdresser();
     
             $req->bindParam(1,$date,PDO::PARAM_STR);
+            $req->bindParam(2,$hairdresser,PDO::PARAM_INT);
             $req->execute();
     
             $data=$req->fetchAll(PDO::FETCH_ASSOC);
@@ -246,11 +287,17 @@ class ModelAppointment{
             return $error->getMessage();
         }
     }
+
+    //! RECUPERE UN CRENEAU DISPONIBLE PAR UN COIFFEUR
     public function getByBooked():array | string{
 
         try{
 
-            $req=$this->getBdd()->prepare("SELECT is_booked FROM appointments WHERE `hour`=? AND `date`=? AND is_booked=0");
+            $req=$this->getBdd()->prepare("SELECT is_booked, `name`, h.id_hairdresser
+            FROM appointments AS a
+            INNER JOIN hairdressers AS h
+            ON a.id_hairdresser=h.id_hairdresser
+            WHERE `hour`=? AND `date`=? AND is_booked=0");
     
             $hour=$this->getHour();
             $date=$this->getDate();
