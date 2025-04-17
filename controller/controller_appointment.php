@@ -246,7 +246,7 @@ class ControllerAppointment{
 
         if(empty($data)){
 
-            return "<span style='color: red'>*Aucun créneau disponible pour la sélection</span>";
+            return "<span style='color: red'>*Veuillez choisir un créneau</span>";
         }
 
         if($_POST["hairdresser"]!="choice"){
@@ -270,6 +270,34 @@ class ControllerAppointment{
     return "";
     }
 
+    //! ANNULER UN RENDEZ-VOUS
+    public function cancelMadeAppointment():string{
+
+        //* récupérer la date
+        $date = $_GET["date"] ?? null;
+
+        if(isset($_POST["cancelAppointment"])){
+
+            //* nettoyer les données
+            $hour=sanitize($_POST["hour"]);
+            $date=sanitize($date);
+            $firstname=sanitize($_POST["firstname"]);
+            $lastname=sanitize($_POST["lastname"]);
+            $hairdresser=sanitize($_POST["hairdresser"]);
+
+            //* donner les informations au model
+            $this->modelAppointment->setHour($hour)
+            ->setDate($date)
+            ->setFirstname($firstname)
+            ->setLastname($lastname)
+            ->setHairdresser($hairdresser);
+            
+            $this->modelAppointment->cancelMadeAppointment($date);$this->modelAppointment->cancelBookAnAppointment($date);
+        }
+
+        return "";
+    }
+
     //! AFFICHAGE DE LA PAGE
     public function render(){
 
@@ -279,6 +307,7 @@ class ControllerAppointment{
         $message=$this->addAppointment();
         $messageMakeAnAppointment=$this->makeAnAppointment();
         $messageCancelAppointment=$this->cancelAddAppointment();
+        $messageCancelMadeAppointment=$this->cancelMadeAppointment();
 
         //* faire le rendu
         echo $this->getViewAppointment()
@@ -287,6 +316,7 @@ class ControllerAppointment{
         ->setAvailableAppointment($availableAppointment)
         ->setMessageMakeAnAppointment($messageMakeAnAppointment)
         ->setMessageCancelAppointment($messageCancelAppointment)
+        ->setMessageCancelMadeAppointment($messageCancelMadeAppointment)
         ->displayView();       
     }
 }

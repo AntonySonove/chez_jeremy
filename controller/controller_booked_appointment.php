@@ -18,6 +18,7 @@ class ControllerBookedAppointment {
         $date = $_GET["date"];
 
         $data=$this->modelAppointment->recoverMadeAppointment($date);
+        // var_dump($data);
 
         if($date){
 
@@ -42,7 +43,12 @@ class ControllerBookedAppointment {
         </p>
         <p>
             <strong>'.$element["benefit"].' | '.$element["name"].'</strong>
+            <button type="submit" name="cancelAppointment" style="color: red;">Annuler le<br>rendez-vous</button>
         </p>
+        <input type="hidden" name="hour" value='.$element["formatted_hour"].'</input>
+        <input type="hidden" name="firstname" value='.$element["firstname"].'</input>
+        <input type="hidden" name="lastname" value='.$element["lastname"].'</input>
+        <input type="hidden" name="hairdresser" value='.$element["id_hairdresser"].'</input>
     </div>
 </li>       
                 ';
@@ -51,8 +57,40 @@ class ControllerBookedAppointment {
         }
         return $bookedAppointment;
     }
+
+    // public function cancelMadeAppointment():string{
+
+    //     //* récupérer la date
+    //     $day = $_GET["date"];
+
+    //     echo "test";
+    //     if(isset($_POST["cancelAppointment"])){
+
+    //         //* nettoyer les données
+    //         $hour=sanitize($_POST["hour"]);
+    //         $date=sanitize($day);
+    //         $firstname=sanitize($_POST["firstname"]);
+    //         $lastname=sanitize($_POST["lastname"]);
+    //         $hairdresser=sanitize($_POST["hairdresser"]);
+
+    //         //* donner les informations au model
+    //         $this->modelAppointment->setHour($hour)
+    //         ->setDate($date)
+    //         ->setFirstname($firstname)
+    //         ->setLastname($lastname)
+    //         ->setHairdresser($hairdresser);
+            
+    //         $this->modelAppointment->cancelMadeAppointment();
+    //         // var_dump($data);
+
+    //     }
+
+    //     return "";
+    // }
 }
 $bookedAppointment= new ControllerBookedAppointment(new ModelAppointment);
+
+// $bookedAppointment->cancelMadeAppointment();
 
 echo $bookedAppointment->displayBookedAppointment();
 ?>

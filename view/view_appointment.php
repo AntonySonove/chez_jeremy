@@ -6,6 +6,7 @@ class ViewAppointment{
     private ?string $messageCancelAppointment;
     private ?string $availableAppointment;
     private ?string $bookedAppointment;
+    private ?string $messageCancelMadeAppointment;
 
     public function getHairdresser(): ?string { return $this->hairdresser; }
     public function setHairdresser(?string $hairdresser): self { $this->hairdresser = $hairdresser; return $this; }
@@ -24,6 +25,9 @@ class ViewAppointment{
 
     public function getBookedAppointment(): ?string { return $this->bookedAppointment; }
     public function setBookedAppointment(?string $bookedAppointment): self { $this->bookedAppointment = $bookedAppointment; return $this; }
+    
+    public function getMessageCancelMadeAppointment(): ?string { return $this->messageCancelMadeAppointment; }
+    public function setMessageCancelMadeAppointment(?string $messageCancelMadeAppointment): self { $this->messageCancelMadeAppointment = $messageCancelMadeAppointment; return $this; }
 
     public function displayView(){
         return'
@@ -202,5 +206,6 @@ class ViewAppointment{
 </html>   
 ';
     }
+
 }
 ?>
