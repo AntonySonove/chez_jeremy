@@ -36,7 +36,8 @@ class ControllerAppointment{
     public function displayAppointment():string{
 
         //* récupération de la date
-        $date=$_GET["date"]?? null;
+        $date=$_GET["date"] ?? null;
+        $hairdresser=$_GET["hairdresser"] ?? "choice";
 
         //*affichage dans un menu select
         if ($date){
@@ -45,7 +46,7 @@ class ControllerAppointment{
             
             echo "<option value='choice' selected >Heure</option>"; //? option sélectionnée par défaut
 
-            foreach($this->modelAppointment->recoverAvailableAppointments($date) as $appointment){ //? boucle pour générer les créneaux
+            foreach($this->modelAppointment->recoverAvailableAppointments($date, $hairdresser) as $appointment){ //? boucle pour générer les créneaux
 
                 $hour= htmlspecialchars($appointment["formatted_hour"], ENT_QUOTES, 'UTF-8');
 
@@ -242,21 +243,31 @@ class ControllerAppointment{
         //* Vérifier que le créneau est disponible
         $this->getModelAppointment()->setHour($hour)->setDate($date);
         $data=$this->getModelAppointment()->getByBooked();
-        var_dump($data);
-        if(!empty($data && $data[0]["id_hairdresser"]=="1")){
 
-            $hairdresser=1;
-            $this->getModelAppointment()->setFirstname($firstname)->setLastname($lastname)->setAge($age)->setStreet($street)->setPostalCode($postalCode)->setTown($town)->setEmail($email)->setPhone($phone)->setBenefit($benefit)->setHairdresser($hairdresser)->bookAnAppointment();
+        if(empty($data)){
 
-            return $this->getModelAppointment()->makeAnAppointment();
+            return "<span style='color: red'>*Aucun créneau disponible pour la sélection</span>";
+        }
 
-        }else{
-            $hairdresser=2;
+        if($_POST["hairdresser"]!="choice"){
+
             $this->getModelAppointment()->setFirstname($firstname)->setLastname($lastname)->setAge($age)->setStreet($street)->setPostalCode($postalCode)->setTown($town)->setEmail($email)->setPhone($phone)->setBenefit($benefit)->setHairdresser($hairdresser)->bookAnAppointment();
 
             return $this->getModelAppointment()->makeAnAppointment();
         }
-        // return "";
+
+        if($_POST["hairdresser"]=="choice"){
+            foreach($data as $element){
+                
+                if($element["is_booked"]==0){
+
+                    $this->getModelAppointment()->setFirstname($firstname)->setLastname($lastname)->setAge($age)->setStreet($street)->setPostalCode($postalCode)->setTown($town)->setEmail($email)->setPhone($phone)->setBenefit($benefit)->setHairdresser($element["id_hairdresser"])->bookAnAppointment();
+
+                    return $this->getModelAppointment()->makeAnAppointment();
+                }
+            }
+        }
+    return "";
     }
 
     //! AFFICHAGE DE LA PAGE

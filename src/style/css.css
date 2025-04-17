@@ -10,9 +10,14 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-#addAppointment{
-    display: flex;
+#containerAppointment{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
 }
 #appointmentList{
+    grid-row: span 2;
+}
+#addAppointment{
     flex-direction: column;
 }

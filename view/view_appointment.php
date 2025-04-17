@@ -37,61 +37,68 @@ class ViewAppointment{
     <link rel="stylesheet" href="../src/style/css.css">
 </head>
 <body>
-    <form action="" method="post">
-        <p>Coordonnées</p>
-        <p>
-            <input type="text" name="firstname" placeholder="Prénom"><span style="color: red">*</span>
-            <input type="text" name="lastname" placeholder="Nom"><span style="color: red">*</span>
-            <input type="number" name="age" placeholder="Age">
-        </p>
-        <p>
-            <input type="text" name="street" placeholder="Rue">
-            <input type="number" name="postalCode" placeholder="Code postal">
-            <input type="text" name="town" placeholder="Ville">
-        </p>
-        <p>
-            <input type="email" name="email" placeholder="E-mail"><span style="color: red">*</span>
-            <input type="tel" name="phone" placeholder="Téléphone" minlength="10" maxlength="10"><span style="color: red">*</span>
-        </p>
-        <p>Prestation</p>
-        <p>
-            <select name="benefit">
-            <option value="choice" selected>Choix de la prestation</option>
-                <optgroup label="Cheveux">
-                    <option value="Coupe + Coiffage">Coupe + Coiffage Homme</option>
-                    <option value="Dégradé américain">Dégradé américain (à blanc)</option>
-                    <option value="Coupe en brosse">Coupe en brosse</option>
-                    <option value="Coupe enfant">Coupe enfant (-de 12 ans)</option>
-                </optgroup>
-                <optgroup label="Barbe">
-                    <option value="Taille de barbe">Taille de barbe (taillage et traçage au rasoir)</option>
-                </optgroup>
-                <optgroup label="Forfaits">
-                    <option value="Shampoing + Coupe + Coiffage">Shampoing + Coupe + Coiffage</option>
-                    <option value="Coupe + Coiffage + Taille de barbe">Coupe + Coiffage + Taille de barbe (finition rasoir)</option>
-                </optgroup>
-            </select>
-        <p>
-            <input id="dateInput" type="date" name="date">
-            
-            <select name="hour" id="selectHour">
-                <option value="choice" selected>Heure</option>
-                '.$this->getAvailableAppointment().'
-            </select>
-        </p>
-        <p>
-            <select name="hairdresser">
-                <option value="choice">Choix du coiffeur</option>
-                '.$this->getHairdresser().'
-            </select>
-        </p>
-        <p>
-            <input type=submit name="submitMakeAnAppointment" value="Prendre rendez-vous">
-            '.$this->getMessageMakeAnAppointment().'
-        </p>
-    </form>
-    <div id= addAppointment>
+    <div id=containerAppointment>
         <form action="" method="post">
+            <p>Coordonnées</p>
+            <p>
+                <input type="text" name="firstname" placeholder="Prénom"><span style="color: red">*</span>
+                <input type="text" name="lastname" placeholder="Nom"><span style="color: red">*</span>
+                <input type="number" name="age" placeholder="Age">
+            </p>
+            <p>
+                <input type="text" name="street" placeholder="Rue">
+                <input type="number" name="postalCode" placeholder="Code postal">
+                <input type="text" name="town" placeholder="Ville">
+            </p>
+            <p>
+                <input type="email" name="email" placeholder="E-mail"><span style="color: red">*</span>
+                <input type="tel" name="phone" placeholder="Téléphone" minlength="10" maxlength="10"><span style="color: red">*</span>
+            </p>
+            <p>Prestation</p>
+            <p>
+                <select name="benefit">
+                <option value="choice" selected>Choix de la prestation</option>
+                    <optgroup label="Cheveux">
+                        <option value="Coupe + Coiffage">Coupe + Coiffage Homme</option>
+                        <option value="Dégradé américain">Dégradé américain (à blanc)</option>
+                        <option value="Coupe en brosse">Coupe en brosse</option>
+                        <option value="Coupe enfant">Coupe enfant (-de 12 ans)</option>
+                    </optgroup>
+                    <optgroup label="Barbe">
+                        <option value="Taille de barbe">Taille de barbe (taillage et traçage au rasoir)</option>
+                    </optgroup>
+                    <optgroup label="Forfaits">
+                        <option value="Shampoing + Coupe + Coiffage">Shampoing + Coupe + Coiffage</option>
+                        <option value="Coupe + Coiffage + Taille de barbe">Coupe + Coiffage + Taille de barbe (finition rasoir)</option>
+                    </optgroup>
+                </select>
+            <p>
+                <input id="dateInput" type="date" name="date">
+                
+                <select id="hairdresser" name="hairdresser">
+                    <option value="choice">Choix du coiffeur</option>
+                    '.$this->getHairdresser().'
+                </select>
+            </p>
+            <p>
+                <select name="hour" id="selectHour">
+                    <option value="choice" selected>Heure</option>
+                    '.$this->getAvailableAppointment().'
+                </select>
+            </p>
+            <p>
+                <input type=submit name="submitMakeAnAppointment" value="Prendre rendez-vous">
+                '.$this->getMessageMakeAnAppointment().'
+            </p>
+        </form id="appointmentList">
+            <form action="" method="post" id= appointmentList>
+            
+            <p>Liste des rendez-vous <input id="inputDisplayAppointment" type="date" name="inputDisplayAppointment"></p>
+            <ul id="displayBookedAppointments">
+            </ul>
+        </form>
+    
+        <form id= addAppointment action="" method="post">
             <p>
                 Ajouter des créneaux
             </p>
@@ -184,15 +191,10 @@ class ViewAppointment{
                 <label for="18:30">18:30</label>
             </p>
         </form>
-
-
-        <div id= appointmentList>
-            
-            <p>Liste des rendez-vous <input id="inputDisplayAppointment" type="date" name="inputDisplayAppointment"></p>
-            <ul id="displayBookedAppointments">
-            </ul>
-        </div>
     </div>
+
+
+    
 
 
 <script src="../src/script/appointment.js"></script>

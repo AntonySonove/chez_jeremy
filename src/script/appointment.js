@@ -1,4 +1,5 @@
 const dateInput = document.getElementById("dateInput");
+const hairdresser=document.getElementById("hairdresser");
 const selectHour = document.getElementById("selectHour");
 const dateAddAppointment= document.getElementById("dateAddAppointment");
 const inputDisplayAppointment= document.getElementById("inputDisplayAppointment");
@@ -13,20 +14,55 @@ dateAddAppointment.value = today;
 inputDisplayAppointment.value = today;
 
 //! GENERER LES CRENEAUX DISPONIBLES
-dateInput.addEventListener("change", async function() {
+// dateInput.addEventListener("change", async function() {
+
+//   try{
+
+//     const selectedDate = dateInput.value;
+//     const response = await fetch(`controller_appointment.php?date=${selectedDate}`);
+//     const data = await response.text();
+  
+//     selectHour.innerHTML = data;
+
+//   }catch(error){
+//     console.log("erreur lors du fetch : ", error);
+//   }
+
+// });
+
+async function fetchAppointment(){
+
+  const selectedDate = dateInput.value;
+  const selectedHairdresser = hairdresser.value;
+
+  if(!selectedDate){
+
+    return;
+  }
+
   try{
 
-    const selectedDate = dateInput.value;
-    const response = await fetch(`controller_appointment.php?date=${selectedDate}`);
+    let url=`controller_appointment.php?date=${selectedDate}`;
+
+    if (selectedHairdresser !="choice"){
+
+      url += `&hairdresser=${selectedHairdresser}`;
+    }
+
+    const response = await fetch(url);
     const data = await response.text();
-  
+    
     selectHour.innerHTML = data;
 
   }catch(error){
     console.log("erreur lors du fetch : ", error);
   }
+}
 
-});
+
+dateInput.addEventListener("change", fetchAppointment)
+hairdresser.addEventListener("change", fetchAppointment);
+
 
 //! AFFICHER LES RENDEZ-VOUS
 inputDisplayAppointment.addEventListener("change", async function() {
@@ -37,7 +73,6 @@ inputDisplayAppointment.addEventListener("change", async function() {
     const data = await response.text();
   
     displayBookedAppointments.innerHTML = data;
-    console.log(data);
 
   }catch(error){
     console.log("erreur lors du fetch : ", error);
@@ -58,6 +93,7 @@ dateInput.addEventListener("input", () => {
 });
 //! charger les créneaux directement a l'affichage de la page
 dateInput.dispatchEvent(new Event("change"));
+hairdresser.dispatchEvent(new Event("change"));
 dateAddAppointment.dispatchEvent(new Event("change"));
 inputDisplayAppointment.dispatchEvent(new Event("change"));
 

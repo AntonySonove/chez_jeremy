@@ -83,7 +83,7 @@ class ModelAppointment{
     }
 
     //! RECUPERER LES CRENEAUX DISPONNIBLES
-    public function recoverAvailableAppointments($date):array | string{
+    public function recoverAvailableAppointments($date, $hairdresser):array | string{
         try{
 
             // Vérifier si la date est un vendredi et exclure les créneaux de 18:00 et 18:30
@@ -95,8 +95,35 @@ class ModelAppointment{
                 $timesQuery = "AND `hour` NOT IN ('18:00', '18:30')";
             } 
 
-            $req=$this->getBdd()->prepare("SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour,`date` FROM appointments WHERE `date`= :selectedDate $timesQuery AND is_booked = 0  GROUP BY `hour` ORDER BY HOUR ASC");
+            //* stockage de la requête SQL dans une variable pour ensuite l'utiliser dans une requête préparée
+
+            // stockage de la requête dans une variable
+            $sql="SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `name`
+            FROM appointments AS a
+            INNER JOIN hairdressers AS h
+            ON a.id_hairdresser=h.id_hairdresser
+            WHERE `date`= :selectedDate $timesQuery AND is_booked = 0";
+            
+            // condition si un coiffeur à été sélectionné
+            if($hairdresser != "choice"){
+                $sql .= " AND a.id_hairdresser = :selectedHairdresser"; //? ne pas oublier l'espace entre " et AND pour la concaténation
+            }
+
+            $sql .= " GROUP BY `hour` ORDER BY HOUR ASC"; //? idem ici pour l'espace entre " et GROUP
+
+            //* Préparation de la requête
+
+            // on peut passer la variable contenant la requête en paramètre pour le prepare 
+            $req=$this->getBdd()->prepare($sql);
+
             $req->bindParam(":selectedDate", $date, PDO::PARAM_STR);
+
+            // condition si un coiffeur à été sélectionné
+            if($hairdresser != "choice"){
+
+                $req->bindParam(":selectedHairdresser", $hairdresser, PDO::PARAM_INT);
+            }
+
             $req->execute();
             $data=$req->fetchAll(PDO::FETCH_ASSOC);
 
