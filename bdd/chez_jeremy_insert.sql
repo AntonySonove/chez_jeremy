@@ -1,19 +1,10 @@
 CREATE DATABASE chez_jeremy;
 USE chez_jeremy;
 
-INSERT INTO appointments (`hour`,`date`) VALUES
-("09:00","2025-04-10"),("09:30","2025-04-10"),("10:00","2025-04-10"),("10:30","2025-04-10"),
-("11:00","2025-04-10"),("11:30","2025-04-10"),("12:00","2025-04-10"),("12:30","2025-04-10"),
-("13:00","2025-04-10"),("13:30","2025-04-10"),("14:00","2025-04-10"),("14:30","2025-04-10"),
-("15:00","2025-04-10"),("15:30","2025-04-10"),("16:00","2025-04-10"),("16:30","2025-04-10"),
-("17:00","2025-04-10"),("17:30","2025-04-10"),("18:00","2025-04-10"),("18:30","2025-04-10");
-
-INSERT INTO appointments (`hour`,`date`) VALUES
-("09:00","2025-04-25"),("09:30","2025-04-25"),("10:00","2025-04-25"),("10:30","2025-04-25"),
-("11:00","2025-04-25"),("11:30","2025-04-25"),("12:00","2025-04-25"),("12:30","2025-04-25"),
-("13:00","2025-04-25"),("13:30","2025-04-25"),("14:00","2025-04-25"),("14:30","2025-04-25"),
-("15:00","2025-04-25"),("15:30","2025-04-25"),("16:00","2025-04-25"),("16:30","2025-04-25"),
-("17:00","2025-04-25"),("17:30","2025-04-25"),("18:00","2025-04-25"),("18:30","2025-04-25");
+SELECT id_appointment, `hour`, `date`, is_booked, `name`, h.id_hairdresser 
+FROM appointments AS a
+INNER JOIN hairdressers AS h
+ON a.id_hairdresser=h.id_hairdresser;
 
 UPDATE appointments SET is_booked =1 WHERE `hour`="09:00";
 UPDATE appointments SET is_booked =1 WHERE `hour`="09:30";
@@ -21,7 +12,8 @@ UPDATE appointments SET is_booked =1 WHERE `hour`="09:30";
 UPDATE appointments SET is_booked =0 WHERE `hour`="09:00";
 UPDATE appointments SET is_booked =0 WHERE `hour`="09:30";
 
--- DELETE FROM appointments;
+DELETE FROM appointments;
 DELETE FROM booked_appointments;
+DELETE FROM hairdressers;
 
--- DROP DATABASE chez_jeremy;
+DROP DATABASE chez_jeremy;
