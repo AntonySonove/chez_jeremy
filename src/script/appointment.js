@@ -53,7 +53,7 @@ async function fetchAppointment(){
     const data = await response.text();
     
     selectHour.innerHTML = data;
-
+    console.log(data);
   }catch(error){
     console.log("erreur lors du fetch : ", error);
   }

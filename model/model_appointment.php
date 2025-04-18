@@ -84,8 +84,8 @@ class ModelAppointment{
 
     //! RECUPERER LES CRENEAUX DISPONNIBLES
     public function recoverAvailableAppointments($date, $hairdresser):array | string{
+        // var_dump($hairdresser);
         try{
-
             // Vérifier si la date est un vendredi et exclure les créneaux de 18:00 et 18:30
             $dayOfWeek = date('w', strtotime($date)); // 0 = dimanche, 1 = lundi, ..., 5 = vendredi
 
@@ -98,7 +98,7 @@ class ModelAppointment{
             //* stockage de la requête SQL dans une variable pour ensuite l'utiliser dans une requête préparée
 
             // stockage de la requête dans une variable
-            $sql="SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour, `name`
+            $sql="SELECT TIME_FORMAT(`hour`, '%H:%i') AS formatted_hour
             FROM appointments AS a
             INNER JOIN hairdressers AS h
             ON a.id_hairdresser=h.id_hairdresser
@@ -130,7 +130,8 @@ class ModelAppointment{
             return $data;
 
         }catch(PDOException $error){
-            return $error->getMessage();
+            $error->getMessage();
+            return [];
         }
     }
 
@@ -166,12 +167,12 @@ class ModelAppointment{
 
             $hour=$this->getHour();
             $date=$this->getDate();
-            $haidresser=$this->getHairdresser();
+            $hairdresser=$this->getHairdresser();
 
             $req=$this->getBdd()->prepare("INSERT INTO appointments (`hour`,`date`,id_hairdresser) VALUES (?,?,?)");
             $req->bindParam(1,$hour,PDO::PARAM_STR);
             $req->bindParam(2,$date,PDO::PARAM_STR);
-            $req->bindParam(3,$haidresser,PDO::PARAM_INT);
+            $req->bindParam(3,$hairdresser,PDO::PARAM_INT);
             $req->execute();
 
             return "";
@@ -248,7 +249,7 @@ class ModelAppointment{
             $hour=$this->getHour();
             $date=$this->getDate();
             $benefit=$this->getBenefit();
-            $haidresser=$this->getHairdresser();
+            $hairdresser=$this->getHairdresser();
 
             $req->bindParam(1,$firstname, PDO::PARAM_STR);
             $req->bindParam(2,$lastname,PDO::PARAM_STR);
@@ -261,7 +262,7 @@ class ModelAppointment{
             $req->bindParam(9,$hour,PDO::PARAM_STR);
             $req->bindParam(10,$date,PDO::PARAM_STR);
             $req->bindParam(11,$benefit,PDO::PARAM_STR);
-            $req->bindParam(12,$haidresser,PDO::PARAM_INT);
+            $req->bindParam(12,$hairdresser,PDO::PARAM_INT);
     
             $req->execute();
     
