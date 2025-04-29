@@ -1,0 +1,91 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+#divTitle{
+    background-image: url("../pictures/services_brightness.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 773 / 460;
+    width: 100%;
+    min-height: 223.16px;
+    max-height: 460px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+
+    box-shadow: -10px 10px 30px black;
+}
+#divServicesPrice{
+    display: flex;
+    flex-direction: column;
+    margin: 0 25px;
+    gap: 25px;
+}
+.divServicesPrice{
+    background-color: #505C65;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 275px;
+    
+}
+.divServicesPrice h2{
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+.servicesPrice{
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+.servicesPrice :nth-child(2){
+    font-weight: bold;
+}
+#forfaitsBarber{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: space-between;
+}
+.separate{
+    background-color: white;
+    height: 2px;
+    margin: 25px 0 25px 0;
+}
+#forfaitsBarberMeeting{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+.buttonServices, .imgButtonIndex{
+    max-width: 375px;
+}
+
+
+@media (min-width: 992px){
+    #divServicesPrice{
+        flex-direction: row;
+    }
+}
+@media (min-width: 1400px){
+    #forfaitsBarberMeeting{
+        flex-direction: row;
+        margin-bottom: 25px;
+        align-items: flex-start;
+    }
+}

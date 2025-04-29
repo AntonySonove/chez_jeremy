@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    background-color: #F5F5F4;
+    font-family: 'Montserrat';
+}
+#imgButtonIndex{
+    display: flex;
+    flex-direction: column;
+}
+.imgButtonIndex{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 773/460;
+    max-width: 773px;
+    max-height: 460px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.imgIndex{
+    width: 100%;
+    height: auto;
+    max-width: 773px;
+    max-height: 460px;
+    object-fit: contain;
+    transition: transform 0.10s;
+}
+.imgIndexBrightness{
+    filter: brightness(50%) drop-shadow(0px 5px 10px black);
+    
+}
+.imgIndexScale{
+    transform: scale(1.10);
+    z-index: 2;
+    filter: drop-shadow(0px 5px 10px black);
+}
+.buttonIndex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    width: 205px;
+    height: 50px;
+    background-color: #544C41;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.10s;
+}
+.buttonIndex:hover{
+    transform: translate(-50%, -50%) scale(1.15);   
+}
+@media (min-width: 774px){
+    #imgButtonIndex{
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+

@@ -14,21 +14,6 @@ dateAddAppointment.value = today;
 inputDisplayAppointment.value = today;
 
 //! GENERER LES CRENEAUX DISPONIBLES
-// dateInput.addEventListener("change", async function() {
-
-//   try{
-
-//     const selectedDate = dateInput.value;
-//     const response = await fetch(`controller_appointment.php?date=${selectedDate}`);
-//     const data = await response.text();
-  
-//     selectHour.innerHTML = data;
-
-//   }catch(error){
-//     console.log("erreur lors du fetch : ", error);
-//   }
-
-// });
 
 async function fetchAppointment(){
 
@@ -58,7 +43,6 @@ async function fetchAppointment(){
     console.log("erreur lors du fetch : ", error);
   }
 }
-
 
 dateInput.addEventListener("change", fetchAppointment)
 hairdresser.addEventListener("change", fetchAppointment);

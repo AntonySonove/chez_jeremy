@@ -32,15 +32,7 @@ class ViewAppointment{
     public function displayView(){
         return'
         
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHEZ JEREMY - Prendre un rendez-vous</title>
-    <link rel="stylesheet" href="../src/style/css.css">
-</head>
-<body>
+<main>
     <div id=containerAppointment>
         <form action="" method="post">
             <p>Coordonnées</p>
@@ -196,11 +188,7 @@ class ViewAppointment{
             </p>
         </form>
     </div>
-
-
-    
-
-
+</main>
 <script src="../src/script/appointment.js"></script>
 </body>
 </html>   

@@ -1,10 +1,8 @@
 <?php
 include "../utils/utils.php";
 include "../model/model_appointment.php";
-include "../controller/controller_header.php";
-// include "../controller/controller_booked_appointment.php";
+include "../view/view_header.php";
 include "../view/view_appointment.php";
-include "../view/view_footer.php";
 
 class ControllerAppointment{
     private ?ViewAppointment $viewAppointment;
@@ -24,7 +22,7 @@ class ControllerAppointment{
     //! INSERER LES COIFFEURS DANS LES SELECT
     public function displayHairdresser():string{
 
-        $hairdresserList='';
+        $hairdresserList=''; //variable d'affichage
         foreach($this->modelAppointment->recoverHairdresser() as $element){
             
             $hairdresserList=$hairdresserList.'<option value='.$element["id_hairdresser"].'>'.$element["name"].'</option>';    
@@ -325,4 +323,5 @@ date_default_timezone_set("Europe/Paris");
 $appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
 
 $appointment->render();
-?>
+
+include "../view/view_footer.php";

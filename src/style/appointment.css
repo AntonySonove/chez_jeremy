@@ -13,6 +13,7 @@ input::-webkit-inner-spin-button {
 #containerAppointment{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin: 25px 25px;
     
 }
 #appointmentList{
