@@ -1,3 +1,6 @@
+<?php
+include "../view/view_header.php";
+?>
 <main>
         
     <div id="divTitle">
@@ -70,3 +73,6 @@
     </div>
 
 </main>
+
+<?php
+include "../view/view_footer.php";

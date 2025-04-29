@@ -1,3 +1,6 @@
+<?php
+include "../view/view_header.php";
+?>
 <main>
         <div id="divTitleProducts">
             <h1>Nos produits</h1>
@@ -25,3 +28,6 @@
             </p>
         </div>
     </main>
+
+    <?php
+    include "../view/view_footer.php";

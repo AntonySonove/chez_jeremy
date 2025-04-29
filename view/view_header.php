@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
     <link rel="stylesheet" href="../src/style/header.css">
     <link rel="stylesheet" href="../src/style/footer.css">
+    <link rel="stylesheet" href="../src/style/products.css">
+    <link rel="stylesheet" href="../src/style/services.css">
     <link rel="stylesheet" href="../src/style/style.css">
     <link rel="stylesheet" href="../src/style/index.css">
     <link rel="stylesheet" href="../src/style/appointment.css">
@@ -21,14 +23,14 @@
         </div>
         <div id="dropdownHeader" class="hideDropdown">
             <a href="../controller/controller_appointment.php" >Prendre rendez-vous</a>
-            <a href="../controller/controller_services.php">Carte des Services</a>
-            <a href="../controller/controller_products.php">Nos produits</a>
+            <a href="../view/view_services.php">Carte des Services</a>
+            <a href="../view/view_products.php">Nos produits</a>
             <a href="#contact">Contact</a>
         </div>
         <div id="nav">
             <a href="../controller/controller_appointment.php" >Prendre rendez-vous</a>
-            <a href="../controller/controller_services.php">Carte des Services</a>
-            <a href="../controller/controller_products.php">Nos produits</a>
+            <a href="../view/view_services.php">Carte des Services</a>
+            <a href="../view/view_products.php">Nos produits</a>
             <a href="#contact">Contact</a>
             
         </div>
