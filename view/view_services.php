@@ -1,7 +1,7 @@
 <?php
 include "../view/view_header.php";
 ?>
-<main>
+<main id="mainServices">
         
     <div id="divTitle">
         <h1>Carte des services</h1>

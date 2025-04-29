@@ -1,7 +1,7 @@
 <?php
 include "../view/view_header.php";
 ?>
-<main>
+<main id="mainProducts">
         <div id="divTitleProducts">
             <h1>Nos produits</h1>
         </div>
