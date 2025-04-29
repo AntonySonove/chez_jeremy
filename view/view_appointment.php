@@ -34,7 +34,7 @@ class ViewAppointment{
         
 <main>
     <div id=containerAppointment>
-        <form action="" method="post">
+        <form action="" method="post" id="details">
             <p>Coordonnées</p>
             <p>
                 <input type="text" name="firstname" placeholder="Prénom"><span style="color: red">*</span>

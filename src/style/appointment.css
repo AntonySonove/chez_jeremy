@@ -14,11 +14,22 @@ input::-webkit-inner-spin-button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 25px 25px;
+    gap: 25px;
     
+}
+#details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 #appointmentList{
     grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;;
 }
 #addAppointment{
+    display: flex;
     flex-direction: column;
+    gap: 10px;
 }
