@@ -1,6 +1,10 @@
 <?php
-include "../view/view_header.php";
-?>
+class ViewServices{
+
+    public function displayView():string{
+
+        return '
+        
 <main id="mainServices">
         
     <div id="divTitle">
@@ -67,12 +71,12 @@ include "../view/view_header.php";
             </div>
         </div>
         <div class="imgButtonIndex">
-            <img class="imgIndex imgIndexBrightness buttonServices" src="../src/pictures/meeting773.jpg" alt="prendre rendez-vous">
-            <a class="buttonIndex" href="../controller/controller_appointment.php">Prendre rendez-vous</a>
+            <img class="imgIndex imgIndexBrightness buttonServices" src="/repository/chez_jeremy/src/pictures/meeting773.jpg" alt="prendre rendez-vous">
+            <a class="buttonIndex" href="/repository/chez_jeremy/appointment">Prendre rendez-vous</a>
         </div>
     </div>
 
 </main>
-
-<?php
-include "../view/view_footer.php";
+        ';
+    }
+}

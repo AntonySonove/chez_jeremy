@@ -41,7 +41,7 @@ class ControllerBookedAppointment {
         <p>
             '.$element["email"].' | '.formatPhoneNumber($element["phone"]).'
         </p>
-        <p>
+        <p id="cancelAppointment">
             <strong>'.$element["benefit"].' | '.$element["name"].'</strong>
             <button type="submit" name="cancelAppointment" style="color: red;">Annuler le<br>rendez-vous</button>
         </p>
@@ -51,46 +51,12 @@ class ControllerBookedAppointment {
         <input type="hidden" name="hairdresser" value='.$element["id_hairdresser"].'</input>
     </div>
 </li>       
-                ';
-    
+                ';    
             }     
         }
         return $bookedAppointment;
     }
-
-    // public function cancelMadeAppointment():string{
-
-    //     //* récupérer la date
-    //     $day = $_GET["date"];
-
-    //     echo "test";
-    //     if(isset($_POST["cancelAppointment"])){
-
-    //         //* nettoyer les données
-    //         $hour=sanitize($_POST["hour"]);
-    //         $date=sanitize($day);
-    //         $firstname=sanitize($_POST["firstname"]);
-    //         $lastname=sanitize($_POST["lastname"]);
-    //         $hairdresser=sanitize($_POST["hairdresser"]);
-
-    //         //* donner les informations au model
-    //         $this->modelAppointment->setHour($hour)
-    //         ->setDate($date)
-    //         ->setFirstname($firstname)
-    //         ->setLastname($lastname)
-    //         ->setHairdresser($hairdresser);
-            
-    //         $this->modelAppointment->cancelMadeAppointment();
-    //         // var_dump($data);
-
-    //     }
-
-    //     return "";
-    // }
 }
 $bookedAppointment= new ControllerBookedAppointment(new ModelAppointment);
 
-// $bookedAppointment->cancelMadeAppointment();
-
 echo $bookedAppointment->displayBookedAppointment();
-?>

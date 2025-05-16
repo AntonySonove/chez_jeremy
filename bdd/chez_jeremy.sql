@@ -1,17 +1,6 @@
 CREATE DATABASE chez_jeremy;
 USE chez_jeremy;
 
--- CREATE TABLE users(
-   -- id_user INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-   -- firstname_user VARCHAR(50) NOT NULL,
-   -- lastname_user VARCHAR(50) NOT NULL,
-   -- age_user VARCHAR(50),
-   -- address_user VARCHAR(50),
-   -- email_user VARCHAR(100) NOT NULL,
-   -- password_user VARCHAR(255) NOT NULL,
-   -- phone_user INT NOT NULL CHECK(PhoneNumber LIKE "[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
--- )engine=InnoDB;
-
 CREATE TABLE hairdressers (
 	id_hairdresser INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `name` VARCHAR(50)

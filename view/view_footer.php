@@ -38,7 +38,7 @@
             <a href="#">Politique de confidentialité</a>
         </div>
     </footer>
-<script src="../src/script/header.js"></script>   
-<script src="../src/script/script.js"></script>   
+<script src="/repository/chez_jeremy/src/script/header.js"></script>   
+<script src="/repository/chez_jeremy/src/script/script.js"></script>   
 </body>
 </html>

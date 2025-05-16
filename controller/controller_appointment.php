@@ -1,8 +1,8 @@
 <?php
-include "../utils/utils.php";
-include "../model/model_appointment.php";
-include "../view/view_header.php";
-include "../view/view_appointment.php";
+// include "../utils/utils.php";
+// include "../model/model_appointment.php";
+// include "../controller/controller_header.php";
+// include "../view/view_appointment.php";
 
 class ControllerAppointment{
     private ?ViewAppointment $viewAppointment;
@@ -170,7 +170,7 @@ class ControllerAppointment{
 
     //! SUPPRIMER UN CRENEAU
     public function cancelAddAppointment(){
-            //* Vérifier si on rçcoit le formulaire
+            //* Vérifier si on reçoit le formulaire
             if(!isset($_POST["cancelAddAppointment"])){
 
                 return "";
@@ -320,8 +320,8 @@ class ControllerAppointment{
 }
 date_default_timezone_set("Europe/Paris");
 
-$appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
+// $appointment=new ControllerAppointment(new ViewAppointment,new ModelAppointment, );
 
-$appointment->render();
+// $appointment->render();
 
-include "../view/view_footer.php";
+// include "../view/view_footer.php";

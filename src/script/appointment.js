@@ -27,7 +27,7 @@ async function fetchAppointment(){
 
   try{
 
-    let url=`controller_appointment.php?date=${selectedDate}`;
+    let url=`/repository/chez_jeremy/appointment?date=${selectedDate}`;
 
     if (selectedHairdresser !="choice"){
 
@@ -38,7 +38,7 @@ async function fetchAppointment(){
     const data = await response.text();
     
     selectHour.innerHTML = data;
-    console.log(data);
+    // console.log(data);
   }catch(error){
     console.log("erreur lors du fetch : ", error);
   }
@@ -53,10 +53,11 @@ inputDisplayAppointment.addEventListener("change", async function() {
   try{
 
     const selectedDateAppointment = inputDisplayAppointment.value;
-    const response = await fetch(`controller_booked_appointment.php?date=${selectedDateAppointment}`);
+    const response = await fetch(`/repository/chez_jeremy/controller/controller_booked_appointment.php?date=${selectedDateAppointment}`);
     const data = await response.text();
   
     displayBookedAppointments.innerHTML = data;
+    console.log(data);
 
   }catch(error){
     console.log("erreur lors du fetch : ", error);

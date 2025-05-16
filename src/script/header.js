@@ -13,3 +13,9 @@ document.addEventListener("click", (event)=>{
 })
 
 
+const appointmentListButton= document.getElementById("appointmentListButton");
+
+appointmentListButton.addEventListener("click",(event)=>{
+    displayBookedAppointments.classList.toggle("hideBookedAppointment")
+    event.stopPropagation();
+});

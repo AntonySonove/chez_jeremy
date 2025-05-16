@@ -86,11 +86,11 @@ class ViewAppointment{
                 <input type=submit name="submitMakeAnAppointment" value="Prendre rendez-vous">
                 '.$this->getMessageMakeAnAppointment().'
             </p>
-        </form id="appointmentList">
+        </form>
             <form action="" method="post" id= appointmentList>
             
-            <p>Liste des rendez-vous <input id="inputDisplayAppointment" type="date" name="inputDisplayAppointment"></p>
-            <ul id="displayBookedAppointments">
+            <p id="appointmentListButton">▼ Liste des rendez-vous <input id="inputDisplayAppointment" type="date" name="inputDisplayAppointment"></p>
+            <ul id="displayBookedAppointments" class="">
             </ul>
         </form>
     
@@ -189,7 +189,7 @@ class ViewAppointment{
         </form>
     </div>
 </main>
-<script src="../src/script/appointment.js"></script>
+<script src="/repository/chez_jeremy/src/script/appointment.js"></script>
 </body>
 </html>   
 ';

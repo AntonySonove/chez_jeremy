@@ -1,12 +1,17 @@
 <?php
-include "../view/view_header.php";
-?>
-<main id="mainProducts">
+// include "../view/view_header.php";
+class ViewProducts{
+
+    public function displayView():string{
+
+        return'
+        
+        <main id="mainProducts">
         <div id="divTitleProducts">
             <h1>Nos produits</h1>
         </div>
         <div id="mansBeard">
-            <img src="../src/pictures/LOGO-OFFICIEL-NOIR-9-244x300.png" alt="logo Man's Beard" width="244" height="300">
+            <img src="/repository/chez_jeremy/src/pictures/LOGO-OFFICIEL-NOIR-9-244x300.png" alt="logo Man\'s Beard" width="244" height="300">
             
             <div id="france">
                 <div id="blue"></div><div id="white"></div><div id="red"></div>
@@ -28,6 +33,7 @@ include "../view/view_header.php";
             </p>
         </div>
     </main>
-
-    <?php
-    include "../view/view_footer.php";
+        ';
+    }
+}
+    // include "../view/view_footer.php";
