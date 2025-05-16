@@ -1,3 +1,6 @@
+#mainAppointment{
+    padding: 25px 25px;
+}
 input{
     max-width: 175px;
 }
@@ -13,7 +16,6 @@ input::-webkit-inner-spin-button {
 #containerAppointment{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 25px 25px;
     gap: 25px;
     
 }
@@ -50,5 +52,28 @@ input::-webkit-inner-spin-button {
     }
     #appointmentList{
         grid-row: 1;
+    }
+}
+@media (min-width:768px){
+     #containerAppointment{
+        grid-template-columns: 1fr 1fr;
+    }
+    #appointmentList{
+        grid-column: 2;
+    }
+}
+@media (min-width:1400px){
+    #mainAppointment{
+        padding: 25px 100px;
+    }
+}
+@media (min-width:1600px){
+    #mainAppointment{
+        padding: 25px 200px;
+    }
+}
+@media (min-width:1920px){
+    #mainAppointment{
+        padding: 25px 300px;
     }
 }

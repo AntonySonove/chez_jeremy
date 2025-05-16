@@ -24,7 +24,7 @@ class ViewHeader{
     <link rel="stylesheet" href="/repository/chez_jeremy/src/style/index.css">
     <link rel="stylesheet" href="/repository/chez_jeremy/src/style/appointment.css">
 </head>
-<body id="bodyIndex">
+<body>
     <header>
         <a id="logo" href="/repository/chez_jeremy/"><img src="/repository/chez_jeremy/src/pictures/logo.PNG" alt="logo" width="189" height="85"></a>
         <div id="burgerMenuButton">

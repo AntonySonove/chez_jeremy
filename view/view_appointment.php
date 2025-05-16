@@ -32,7 +32,7 @@ class ViewAppointment{
     public function displayView(){
         return'
         
-<main>
+<main id="mainAppointment">
     <div id=containerAppointment>
         <form action="" method="post" id="details">
             <p>Coordonnées</p>
