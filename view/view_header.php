@@ -33,13 +33,13 @@ class ViewHeader{
             <div class="burgerMenu"></div>
         </div>
         <div id="dropdownHeader" class="hideDropdown">
-            <a href="/repository/chez_jeremy/appointment" >Prendre rendez-vous</a>
+            <a href="/repository/chez_jeremy/appointment">Prendre rendez-vous</a>
             <a href="/repository/chez_jeremy/services">Carte des Services</a>
             <a href="/repository/chez_jeremy/products">Nos produits</a>
             <a href="#contact">Contact</a>
         </div>
         <div id="nav">
-            <a href="/repository/chez_jeremy/appointment" >Prendre rendez-vous</a>
+            <a href="/repository/chez_jeremy/appointment">Prendre rendez-vous</a>
             <a href="/repository/chez_jeremy/services">Carte des Services</a>
             <a href="/repository/chez_jeremy/products">Nos produits</a>
             <a href="#contact">Contact</a>
